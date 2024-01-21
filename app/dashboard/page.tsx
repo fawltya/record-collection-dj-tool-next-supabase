@@ -17,9 +17,5 @@ export default async function Page() {
     .from("record_collection")
     .select();
 
-    return (
-        <>
-        </>
-        <pre>{JSON.stringify(recordCollection, null, 2)}</pre>)
-    
+  return <pre>{JSON.stringify(recordCollection, null, 2)}</pre>;
 }
