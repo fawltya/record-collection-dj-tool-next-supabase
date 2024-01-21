@@ -17,11 +17,13 @@ export default async function Page() {
   const supabase = createClient(cookieStore);
   const { data: recordCollection } = await supabase
     .from("record_collection")
-    .select();
+    .select()
+    .limit(20)
+    .order("album", { ascending: false });
 
   return (
     <>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto">
         <DataTable columns={columns} data={recordCollection} />
       </div>
     </>
