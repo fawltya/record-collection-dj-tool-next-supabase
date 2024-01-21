@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.title {
+  font-family: "Cairo";
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+
+h1 {
+  background-image: url(https://media.giphy.com/media/eSCpVwCRSmLMk/giphy.gif);
+  background-size: 300%;
+  background-position: bottom left;
+  color: transparent;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+  animation: glow-light 2s ease-in-out infinite alternate;
+}
+
+.dark h1 {
+  background-size: 160%;
+  background-position: bottom;
+  animation: glow-dark 2s ease-in-out infinite alternate;
+}
+
+/* h1 {
+    
+    animation: glow 2s ease-in-out infinite alternate;
+  } */
+
+@keyframes glow-dark {
+  from {
+    text-shadow: 0 0 20px #2d9da91b;
+  }
+  to {
+    text-shadow: 0 0 30px #34b3c125, 0 0 10px #4dbbc724;
+  }
+}
+@keyframes glow-light {
+  from {
+    text-shadow: 0 0 20px #0d2e311b;
+  }
+  to {
+    text-shadow: 0 0 30px #0a262925, 0 0 10px #14343824;
+  }
+}
