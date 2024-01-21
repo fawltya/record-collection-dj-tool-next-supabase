@@ -1,6 +1,8 @@
 import Sidebar from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { DataTable } from "./table";
+import { CollectionHeaders, columns } from "./table-header";
 
 // export default async function Page() {
 //   return (
@@ -17,5 +19,11 @@ export default async function Page() {
     .from("record_collection")
     .select();
 
-  return <pre>{JSON.stringify(recordCollection, null, 2)}</pre>;
+  return (
+    <>
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={recordCollection} />
+      </div>
+    </>
+  );
 }
