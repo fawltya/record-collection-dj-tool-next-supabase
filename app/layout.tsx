@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./styles/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Footer from "@/components/ui/footer";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -8,8 +9,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Record Collection DJ Tool",
+  description: "Key and BPM of records with filtering",
 };
 
 export default function RootLayout({
@@ -20,16 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="min-h-screen flex flex-col items-center">
             {children}
-          </ThemeProvider>
-        </main>
+            <Footer />
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

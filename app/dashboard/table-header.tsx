@@ -9,9 +9,22 @@ export type CollectionHeaders = {
   artist: string;
   album: string;
   genre: string;
+  sub_genre: string;
+  bpm: number;
+  key: string;
+  notes: string;
+  rating: number;
 };
 
 export const columns: ColumnDef<CollectionHeaders>[] = [
+  {
+    accessorKey: "bpm",
+    header: "BPM",
+  },
+  {
+    accessorKey: "key",
+    header: "Key",
+  },
   {
     accessorKey: "song_title",
     header: "Title",
@@ -21,11 +34,23 @@ export const columns: ColumnDef<CollectionHeaders>[] = [
     header: "Artist",
   },
   {
+    accessorKey: "genre",
+    header: "Genre",
+  },
+  {
+    accessorKey: "sub_genre",
+    header: "Sub-Genre",
+  },
+  {
     accessorKey: "album",
     header: "Album",
   },
   {
-    accessorKey: "genre",
-    header: "Genre",
+    accessorKey: "notes",
+    header: "Notes",
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
   },
 ];
