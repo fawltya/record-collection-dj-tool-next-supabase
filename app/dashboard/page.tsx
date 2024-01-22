@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { DataTable } from "./table";
 import { CollectionHeaders, columns } from "./table-header";
 import Search from "@/components/ui/search";
-import { AddRecord } from "@/components/ui/add-edit-record";
+import { AddRecord } from "@/components/ui/add-record";
 
 export default async function Page({
   searchParams,
