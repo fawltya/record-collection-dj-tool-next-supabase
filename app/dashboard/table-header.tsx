@@ -2,6 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Ratings } from "@/components/ui/ratings";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type CollectionHeaders = {
   song_title: string;
@@ -18,7 +20,17 @@ export type CollectionHeaders = {
 export const columns: ColumnDef<CollectionHeaders>[] = [
   {
     accessorKey: "bpm",
-    header: "BPM",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          BPM
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "key",

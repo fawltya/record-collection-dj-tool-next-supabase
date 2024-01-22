@@ -1,19 +1,16 @@
+import React from "react";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { DataTable } from "./table";
-import { CollectionHeaders, columns } from "./table-header";
+import { columns } from "./table-header";
 import Search from "@/components/ui/search";
 import { AddRecord } from "@/components/ui/add-record";
+import { EditRecord } from "@/components/ui/edit-record";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: { query?: string; page?: string };
-}) {
+export default async function Page({ searchParams }) {
   const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const editRecordId = searchParams?.edit || null;
+  const supabase = createClient(cookies());
 
   let queryBuilder = supabase
     .from("record_collection")
@@ -26,21 +23,16 @@ export default async function Page({
     queryBuilder = queryBuilder.or(searchCondition);
   }
 
-  const { data: recordCollection, error } = await queryBuilder;
-
-  if (error) {
-    console.error("Error fetching records:", error);
-  }
+  const { data: recordCollection } = await queryBuilder;
 
   return (
-    <>
-      <div className="container mx-auto">
-        <div className="flex flex-row mb-6 gap-10">
-          <Search />
-          <AddRecord />
-        </div>
-        <DataTable columns={columns} data={recordCollection || []} />
+    <div className="container mx-auto">
+      <div className="flex flex-row mb-6 gap-10">
+        <Search />
+        <AddRecord />
       </div>
-    </>
+      <DataTable columns={columns} data={recordCollection || []} />
+      {editRecordId && <EditRecord recordId={editRecordId} />}
+    </div>
   );
 }

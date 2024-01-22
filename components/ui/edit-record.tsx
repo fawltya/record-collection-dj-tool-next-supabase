@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -20,59 +21,88 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { formSchema } from "./formSchema";
+import { TrashIcon } from "@radix-ui/react-icons";
 
-export function AddRecord() {
-  const form = useForm<z.infer<typeof formSchema>>({
+export function EditRecord({ recordId }) {
+  const [recordData, setRecordData] = useState(null);
+  const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      song_title: "",
-      artist: "",
-      album: "",
-      genre: "",
-      sub_genre: "",
-      bpm: 174,
-      key: "1A",
-      notes: "",
-      rating: 0,
-    },
+    defaultValues: recordData,
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form values being sent:", values);
+  useEffect(() => {
+    const fetchRecordData = async () => {
+      if (recordId) {
+        const { data, error } = await supabase
+          .from("record_collection")
+          .select("*")
+          .eq("uuid", recordId)
+          .single();
 
-    const { data, error } = await supabase.from("record_collection").insert([
-      {
-        song_title: values.song_title,
-        artist: values.artist,
-        album: values.album,
-        genre: values.genre,
-        sub_genre: values.sub_genre,
-        bpm: values.bpm,
-        key: values.key,
-        notes: values.notes,
-        rating: values.rating,
-      },
-    ]);
+        if (error) {
+          console.error("Error fetching record data:", error);
+        } else {
+          setRecordData(data);
+          form.reset(data);
+        }
+      }
+    };
+
+    fetchRecordData();
+  }, [recordId, form]);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { error } = await supabase
+      .from("record_collection")
+      .update([
+        {
+          song_title: values.song_title,
+          artist: values.artist,
+          album: values.album,
+          genre: values.genre,
+          sub_genre: values.sub_genre,
+          bpm: values.bpm,
+          key: values.key,
+          notes: values.notes,
+          rating: values.rating,
+        },
+      ])
+      .eq("uuid", recordId);
 
     if (error) {
-      console.error("Error inserting record:", error);
+      console.error("Error updating record:", error);
     } else {
       setTimeout(() => {
         window.location.reload();
       }, 50);
     }
-  }
+  };
+
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from("record_collection")
+      .delete()
+      .eq("uuid", recordId);
+
+    if (error) {
+      console.error("Error deleting record:", error);
+    } else {
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }
+  };
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Add a new record</Button>
+        <Button variant="outline" handleClick={EditRecord}>
+          Edit Record
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <div className="mx-auto w-full max-w-sm">
@@ -99,6 +129,7 @@ export function AddRecord() {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="key"
@@ -221,9 +252,17 @@ export function AddRecord() {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Submit
-              </Button>
+              <div className="flex flex-row justify-between gap-2">
+                <Button type="submit" className="w-full">
+                  Submit
+                </Button>
+                <Button variant="outline" className="py-4">
+                  <TrashIcon
+                    onClick={handleDelete}
+                    className="h-max w-5 text-red-700"
+                  />
+                </Button>
+              </div>
             </form>
           </Form>
         </div>
