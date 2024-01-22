@@ -53,7 +53,6 @@ export const columns: ColumnDef<CollectionHeaders>[] = [
     header: "Rating",
     cell: (info) => {
       const ratingValue = info.getValue();
-      // Ensure ratingValue is a number before passing it to Ratings component
       return (
         <Ratings rating={typeof ratingValue === "number" ? ratingValue : 0} />
       );
