@@ -12,15 +12,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -79,9 +79,6 @@ export function AddRecord() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Supabase client:", supabase);
-
-    console.log("onSubmit clicked");
     console.log("Form values being sent:", values);
 
     const { data, error } = await supabase.from("record_collection").insert([
@@ -97,31 +94,67 @@ export function AddRecord() {
         rating: values.rating,
       },
     ]);
-    console.log("Supabase response:", data, error);
 
     if (error) {
       console.error("Error inserting record:", error);
       return;
     }
-
-    console.log("Record added:", values);
   }
 
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
+    <Sheet>
+      <SheetTrigger asChild>
         <Button variant="outline">Add a new record</Button>
-      </DrawerTrigger>
-      <DrawerContent>
+      </SheetTrigger>
+      <SheetContent>
         <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
-            <DrawerTitle>Add a new record</DrawerTitle>
-            <DrawerDescription>
-              Fill in the record details here.
-            </DrawerDescription>
-          </DrawerHeader>
+          <SheetHeader>
+            <SheetTitle className=" text-3xl mt-3">Add a new record</SheetTitle>
+          </SheetHeader>
+          <Separator className="mt-3" />
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 mt-6"
+            >
+              <div className="flex flex-row align-bottom gap-3">
+                {/* BPM Field */}
+                <FormField
+                  control={form.control}
+                  name="bpm"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>BPM</FormLabel>
+                      <FormControl>
+                        <Input type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Key Field */}
+                <FormField
+                  control={form.control}
+                  name="key"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Key</FormLabel>
+
+                      {/* <div className="flex flex-row justify-between">
+                        <FormLabel>Key</FormLabel>
+                        <FormDescription>Camelot format</FormDescription>
+                      </div> */}
+
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* Song Title Field */}
               <FormField
                 control={form.control}
                 name="song_title"
@@ -131,26 +164,118 @@ export function AddRecord() {
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>Name the tune</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+
+              {/* Artist Field */}
+              <FormField
+                control={form.control}
+                name="artist"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Artist</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Genre Field */}
+              <FormField
+                control={form.control}
+                name="genre"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Genre</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Sub Genre Field */}
+              <FormField
+                control={form.control}
+                name="sub_genre"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sub Genre</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Album Field */}
+              <FormField
+                control={form.control}
+                name="album"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Album</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Notes Field */}
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <FormControl>
+                      <Textarea className="resize-none" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Rating Field */}
+              <FormField
+                control={form.control}
+                name="rating"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rating</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        value={field.value}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value) || 0)
+                        }
+                      />
+                    </FormControl>
+                    <FormDescription className="pb-10">
+                      Rating from 0 to 5
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
             </form>
           </Form>
-
-          <DrawerFooter>
-            {/* <DrawerClose asChild>
-              <Button variant="outline">Save</Button>
-            </DrawerClose>
-            <Button>Save and add another</Button> */}
-            <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
         </div>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   );
 }
