@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { DataTable } from "./table";
 import { CollectionHeaders, columns } from "./table-header";
 import Search from "@/components/ui/search";
-import NewRecord from "@/components/ui/new-record";
+import { AddRecord } from "@/components/ui/add-edit-record";
+import { Button } from "nextra/components";
 
 export default async function Page({
   searchParams,
@@ -37,7 +38,7 @@ export default async function Page({
       <div className="container mx-auto">
         <div className="flex flex-row mb-6 gap-10">
           <Search />
-          <NewRecord />
+          <AddRecord />
         </div>
         <DataTable columns={columns} data={recordCollection} />
       </div>
