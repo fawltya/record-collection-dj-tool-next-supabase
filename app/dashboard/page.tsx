@@ -1,11 +1,9 @@
-import Sidebar from "@/components/ui/sidebar";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { DataTable } from "./table";
 import { CollectionHeaders, columns } from "./table-header";
 import Search from "@/components/ui/search";
 import { AddRecord } from "@/components/ui/add-edit-record";
-import { Button } from "nextra/components";
 
 export default async function Page({
   searchParams,
