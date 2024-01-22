@@ -8,10 +8,7 @@ import { AddRecord } from "@/components/ui/add-edit-record";
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
+  searchParams?: { query?: string; page?: string };
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
@@ -29,7 +26,11 @@ export default async function Page({
     queryBuilder = queryBuilder.or(searchCondition);
   }
 
-  const { data: recordCollection } = await queryBuilder;
+  const { data: recordCollection, error } = await queryBuilder;
+
+  if (error) {
+    console.error("Error fetching records:", error);
+  }
 
   return (
     <>
@@ -38,7 +39,7 @@ export default async function Page({
           <Search />
           <AddRecord />
         </div>
-        <DataTable columns={columns} data={recordCollection} />
+        <DataTable columns={columns} data={recordCollection || []} />
       </div>
     </>
   );

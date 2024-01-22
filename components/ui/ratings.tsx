@@ -19,14 +19,12 @@ const ratingVariants = {
 interface RatingsProps extends React.HTMLAttributes<HTMLDivElement> {
   rating: number;
   totalStars?: number;
-  size?: number;
   variant?: keyof typeof ratingVariants;
 }
 
 const Ratings = ({
   rating,
   totalStars = 5,
-  size = 20,
   variant = "default",
   ...props
 }: RatingsProps) => {
@@ -38,14 +36,12 @@ const Ratings = ({
       {[...Array(fullStars)].map((_, i) => (
         <StarFilledIcon
           key={i}
-          size={size}
           className={`fill-current ${ratingVariants[variant].star}`}
         />
       ))}
       {[...Array(emptyStars)].map((_, i) => (
         <StarIcon
           key={i}
-          size={size}
           className={`fill-current ${ratingVariants[variant].emptyStar}`}
         />
       ))}
