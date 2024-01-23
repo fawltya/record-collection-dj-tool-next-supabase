@@ -2,6 +2,7 @@ import { Button } from "./button";
 import { ModeToggle } from "./dark-theme-toggle";
 import { TypographyH1 } from "./typography/h1";
 import LoggedInOut from "./logged-in-out";
+import { useEffect } from "react";
 
 export default function Sidebar() {
   return (

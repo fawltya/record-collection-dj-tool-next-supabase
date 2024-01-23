@@ -1,4 +1,5 @@
 import Sidebar from "@/components/ui/sidebar";
+import { Toaster } from "sonner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,6 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
       <div className="flex-grow p-6 md:overflow-y-auto md:p-12 w-full md:pb-20">
         {children}
+        <Toaster richColors={true} />
       </div>
     </div>
   );

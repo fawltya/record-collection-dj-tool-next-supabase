@@ -7,7 +7,14 @@ import Search from "@/components/ui/search";
 import { AddRecord } from "@/components/ui/add-record";
 import { EditRecord } from "@/components/ui/edit-record";
 
-export default async function Page({ searchParams }) {
+interface PageProps {
+  searchParams: {
+    query?: string;
+    edit?: string | null;
+  };
+}
+
+export default async function Page({ searchParams }: PageProps) {
   const query = searchParams?.query || "";
   const editRecordId = searchParams?.edit || null;
   const supabase = createClient(cookies());

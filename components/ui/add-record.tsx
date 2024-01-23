@@ -26,6 +26,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { formSchema } from "./formSchema";
+import { toast } from "sonner";
+import { CollectionHeaders } from "@/app/dashboard/table-header";
 
 export function AddRecord() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,11 +63,14 @@ export function AddRecord() {
     ]);
 
     if (error) {
-      console.error("Error inserting record:", error);
+      console.error("Error updating record:", error);
     } else {
       setTimeout(() => {
         window.location.reload();
-      }, 50);
+      }, 900);
+      toast.success("Track loaded...", {
+        duration: 1000,
+      });
     }
   }
 
@@ -93,7 +98,11 @@ export function AddRecord() {
                     <FormItem>
                       <FormLabel>BPM</FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input
+                          type="number"
+                          {...field}
+                          value={field.value || 174}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -106,7 +115,7 @@ export function AddRecord() {
                     <FormItem>
                       <FormLabel>Key</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} value={field.value || ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -120,7 +129,7 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Song Title</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,7 +143,7 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Artist</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -148,7 +157,7 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Genre</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,7 +171,7 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Sub Genre</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -176,7 +185,7 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Album</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -190,7 +199,11 @@ export function AddRecord() {
                   <FormItem>
                     <FormLabel>Notes</FormLabel>
                     <FormControl>
-                      <Textarea className="resize-none" {...field} />
+                      <Textarea
+                        className="resize-none"
+                        {...field}
+                        value={field.value || ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -207,7 +220,7 @@ export function AddRecord() {
                       <Input
                         type="number"
                         {...field}
-                        value={field.value}
+                        value={field.value || 0}
                         onChange={(e) =>
                           field.onChange(parseInt(e.target.value) || 0)
                         }

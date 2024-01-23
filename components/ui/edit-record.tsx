@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import {
   Sheet,
   SheetClose,
@@ -26,12 +27,18 @@ import { useForm } from "react-hook-form";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { formSchema } from "./formSchema";
 import { TrashIcon } from "@radix-ui/react-icons";
+import * as z from "zod";
+import { CollectionHeaders } from "@/app/dashboard/table-header";
 
-export function EditRecord({ recordId }) {
-  const [recordData, setRecordData] = useState(null);
+interface EditRecordProps {
+  recordId: string;
+}
+
+export function EditRecord({ recordId }: EditRecordProps) {
+  const [recordData, setRecordData] = useState<CollectionHeaders | null>(null);
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: recordData,
+    defaultValues: recordData || {},
   });
 
   useEffect(() => {
@@ -78,31 +85,43 @@ export function EditRecord({ recordId }) {
     } else {
       setTimeout(() => {
         window.location.reload();
-      }, 50);
+      }, 900);
+      toast.success(`${recordData?.song_title} has been updated.`, {
+        duration: 1000,
+      });
     }
   };
 
   const handleDelete = async () => {
-    const { error } = await supabase
+    const { data: fetchData, error: fetchError } = await supabase
+      .from("record_collection")
+      .select("song_title")
+      .eq("uuid", recordId)
+      .single();
+
+    if (fetchError) {
+      console.error("Error fetching record data:", fetchError);
+      return;
+    }
+
+    const { error: deleteError } = await supabase
       .from("record_collection")
       .delete()
       .eq("uuid", recordId);
 
-    if (error) {
-      console.error("Error deleting record:", error);
+    if (deleteError) {
+      console.error("Error deleting record:", deleteError);
     } else {
-      setTimeout(() => {
-        window.location.reload();
-      }, 50);
+      toast.error(`${fetchData?.song_title} binned!`, {
+        duration: 1000,
+      });
     }
   };
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" handleClick={EditRecord}>
-          Edit Record
-        </Button>
+        <Button variant="outline">Edit Record</Button>
       </SheetTrigger>
       <SheetContent>
         <div className="mx-auto w-full max-w-sm">

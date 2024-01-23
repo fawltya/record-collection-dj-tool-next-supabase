@@ -14,10 +14,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EditRecord } from "@/components/ui/edit-record";
+import { CollectionHeaders } from "./table-header";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  columns: ColumnDef<CollectionHeaders, any>[];
+  data: CollectionHeaders[];
 }
 
 export function DataTable<TData, TValue>({
@@ -60,7 +61,7 @@ export function DataTable<TData, TValue>({
                 </TableCell>
               ))}
               <TableCell>
-                <EditRecord recordId={row.original.uuid}>Edit</EditRecord>
+                <EditRecord recordId={row.original.uuid} />
               </TableCell>
             </TableRow>
           ))}

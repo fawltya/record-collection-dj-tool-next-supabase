@@ -6,6 +6,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export type CollectionHeaders = {
+  uuid: string;
   song_title: string;
   artist: string;
   album: string;
