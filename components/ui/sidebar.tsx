@@ -14,7 +14,7 @@ export default function Sidebar() {
         whiteSpace: "nowrap",
       }}
     >
-      <TypographyH1 className="">Record Collection</TypographyH1>
+      <TypographyH1 className="">Record_Collection</TypographyH1>
     </div>
   );
 }
