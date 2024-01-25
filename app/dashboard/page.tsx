@@ -22,6 +22,7 @@ export default async function Page({ searchParams }: PageProps) {
   let queryBuilder = supabase
     .from("record_collection")
     .select()
+    .limit(50)
     .order("song_title", { ascending: true });
 
   if (query) {
