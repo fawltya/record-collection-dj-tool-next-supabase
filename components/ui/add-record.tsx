@@ -77,7 +77,9 @@ export function AddRecord() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Add a new record</Button>
+        <Button variant="outline" className="text-stone-50">
+          Add a new record
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <div className="mx-auto w-full max-w-sm">

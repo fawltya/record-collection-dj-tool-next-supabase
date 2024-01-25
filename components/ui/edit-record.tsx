@@ -121,7 +121,9 @@ export function EditRecord({ recordId }: EditRecordProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit Record</Button>
+        <Button variant="outline" className="text-stone-50">
+          Edit Record
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <div className="mx-auto w-full max-w-sm">
