@@ -1,6 +1,6 @@
 # Record Collection DJ Tool
 
-Very much a work in progress, any ideas or feedback is welcome!
+Very much a work in progress, if you'd like access to try the app out get in touch. Any ideas or feedback is welcome.
 
 ## About
 
@@ -18,3 +18,5 @@ This app is designed for vinyl DJs to manage their record collections effectivel
 - **Frontend**: Built with [Next.js](https://nextjs.org/)
 - **Database**: Utilizes [Supabase](https://supabase.io/)
 - **UI Components**: Styled using [shadcn](https://github.com/shadcn) and [Tailwind CSS](https://tailwindcss.com/)
+
+![A search for artist Halogenix](./gh/halogenix-search.png)
