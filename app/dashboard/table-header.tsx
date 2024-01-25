@@ -28,30 +28,80 @@ export const columns: ColumnDef<CollectionHeaders>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           BPM
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 h-4 w-4" />
         </Button>
       );
     },
   },
   {
     accessorKey: "key",
-    header: "Key",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Key
+          <ArrowUpDown className="ml-1 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "song_title",
-    header: "Title",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Title
+          <ArrowUpDown className="ml-1 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "artist",
-    header: "Artist",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Artist
+          <ArrowUpDown className="ml-1 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "genre",
-    header: "Genre",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Genre
+          <ArrowUpDown className="ml-1 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "sub_genre",
-    header: "Sub-Genre",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Sub-Genre
+          <ArrowUpDown className="ml-1 h-3 w-3" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "album",
