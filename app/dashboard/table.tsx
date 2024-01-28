@@ -20,6 +20,17 @@ import { EditRecord } from "@/components/ui/edit-record";
 import { CollectionHeaders } from "./table-header";
 import { RecordPagination } from "@/components/record-pagination";
 import { useState } from "react";
+import useMediaQuery from "@/utils/useMediaQuery";
+import RecordCard from "@/components/ui/card-view";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useEffect } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<CollectionHeaders, any>[];
@@ -32,6 +43,20 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const handleSort = (columnKey: string) => {
+    const column = table.getColumn(columnKey);
+    if (column) {
+      setSorting((old) => [
+        ...old,
+        { id: columnKey, desc: column.getIsSorted() !== "desc" },
+      ]);
+    }
+  };
+  useEffect(() => {
+    console.log("Current Sorting State: ", sorting); // Debugging line
+  }, [sorting]);
+
   const table = useReactTable({
     data,
     columns,
@@ -43,6 +68,34 @@ export function DataTable<TData, TValue>({
       sorting,
     },
   });
+
+  if (isMobile) {
+    return (
+      <div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>Sort by</DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => handleSort("song_title")}>
+              Title
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSort("bpm")}>
+              BPM
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSort("key")}>
+              Key
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSort("rating")}>
+              Rating
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {data.map((record) => (
+          <RecordCard key={record.uuid} data={record} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -34,7 +34,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-row mb-6 gap-10">
+      <div className="flex flex-row mb-6 gap-5">
         <Search />
         <AddRecord />
       </div>

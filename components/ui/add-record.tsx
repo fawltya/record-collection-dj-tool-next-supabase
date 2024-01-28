@@ -78,7 +78,7 @@ export function AddRecord() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" className="text-stone-50">
-          Add a new record
+          Add New
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -104,6 +104,9 @@ export function AddRecord() {
                           type="number"
                           {...field}
                           value={field.value || 174}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value) || 0)
+                          }
                         />
                       </FormControl>
                       <FormMessage />

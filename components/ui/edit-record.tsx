@@ -122,13 +122,13 @@ export function EditRecord({ recordId }: EditRecordProps) {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" className="text-stone-50">
-          Edit Record
+          Edit
         </Button>
       </SheetTrigger>
       <SheetContent>
         <div className="mx-auto w-full max-w-sm">
           <SheetHeader>
-            <SheetTitle className=" text-3xl mt-3">Add a new record</SheetTitle>
+            <SheetTitle className=" text-3xl mt-3">Edit record</SheetTitle>
           </SheetHeader>
           <Separator className="mt-3" />
           <Form {...form}>
@@ -144,7 +144,14 @@ export function EditRecord({ recordId }: EditRecordProps) {
                     <FormItem>
                       <FormLabel>BPM</FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input
+                          type="number"
+                          {...field}
+                          value={field.value}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value) || 0)
+                          }
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
