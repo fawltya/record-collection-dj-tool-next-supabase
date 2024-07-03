@@ -2,9 +2,12 @@
 
 Very much a work in progress, if you'd like access to try the app out get in touch. Any ideas or feedback is welcome.
 
-You can test the app in it's current form by visiting
+You can test the app in it's current form by visiting:
+
 [https://record-collection-dj-tool-next-supabase.vercel.app/login](https://record-collection-dj-tool-next-supabase.vercel.app/login)
+
 Username: djtool@github.com
+
 Password: fawltya
 
 ## About
